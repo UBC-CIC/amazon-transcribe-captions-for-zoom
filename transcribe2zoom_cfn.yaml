@@ -8,16 +8,27 @@ Parameters:
     Description: 'Region to run transcribe in'
     Default: ca-central-1
 
-  ACCESSKEYID:
-    Type: String
-    Description: 'AWS account id for transcribe'
-    Default: access_key_id
-  SECRET:
-    Type: String
-    Description: 'AWS secret to be used with transcribe'
-    Default: secret
-
 Resources:
+  TranscribeStreamingUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Sub ${AWS::StackName}-transcribe-streaming-user
+      Policies:
+      - PolicyName: TranscribeStreaming
+        PolicyDocument:
+          Statement:
+          - Effect: Allow
+            Action:
+            - transcribe:StartStreamTranscriptionWebSocket
+            Resource:
+            - '*'
+
+  # Access key for Gitlab to access S3 bucket & ECR
+  TranscribeStreamingUserAccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref TranscribeStreamingUser
+
   PreSignedUrlLambda:
     Type: AWS::Serverless::Function
     Properties:
@@ -26,8 +37,8 @@ Resources:
       Handler: index.handler
       Environment:
         Variables:
-          ACCESS_KEY_ID: !Ref ACCESSKEYID
-          SECRET: !Ref SECRET
+          ACCESS_KEY_ID: !Ref TranscribeStreamingUserAccessKey
+          SECRET: !GetAtt [TranscribeStreamingUserAccessKey, SecretAccessKey]
           REGION: !Ref REGION
       MemorySize: 128
       Role: !GetAtt PreSignedUrlLambdaRole.Arn
