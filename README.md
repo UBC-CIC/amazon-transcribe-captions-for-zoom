@@ -17,89 +17,65 @@ This PoC demonstrates how you can use Amazon Transcribe as a third party close c
 
 ## Building and Deploying 
 
-### Step 1. 
-Create an IAM user with programmatic access take note of security credntials. Attach the TranscribeStreamingWebSockets Managed policy to the IAM user. 
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "transcribestreaming",
-            "Effect": "Allow",
-            "Action": "transcribe:StartStreamTranscriptionWebSocket",
-            "Resource": "*"
-        }
-    ]
-}
-```
-
-### Step 2.
-This application requires an API Gateway endpoint and Lambda to Pre-Signed URL 
+### Step 1.
+This application requires an API Gateway endpoint and Lambda to Pre-Signed URL
 
 Run the cloudformation script:
 
-2.1 create a s3 deployment bucket
+1.1 create a s3 deployment bucket
 ```
 aws s3api create-bucket --bucket {YOUR_BUCKET_NAME} --create-bucket-configuration LocationConstraint={YOUR REGION} --region {YOUR REGION} --profile  {YOUR PROFILE}
 
 ```
 
 ```
-aws --profile  {YOUR_PROFILE}  cloudformation package --template-file /path_to_template/transcribe2zoom_cfn.yaml  --s3-bucket {YOUR_BUCKET_NAME}  --output-template-file output.yml 
+aws --profile  {YOUR_PROFILE}  cloudformation package --template-file ./transcribe2zoom_cfn.yaml  --s3-bucket {YOUR_BUCKET_NAME}  --output-template-file output.yml
+
 ```
 
-2.2 Deploy the template package.
+1.2 Deploy the template package.
 
-The paramater values for the following paramater keys must be set:<br/><br/>
-IAM user credentials from Step 1:
-
-ACCESSKEYID  
-SECRET
-
-
-and the region you want the transcriptions to occur in:
+The paramater values for the region you want the transcriptions to occur in:
 
 REGION
 
 ```
-aws cloudformation deploy --template /path_to_template/output.yml --stack-name {YOUR_STACK_NAME} --parameter-overrides REGION={REGION_TO_RUN_TRANSCRIBE_IN} ACCESSKEYID={IAM ACCESS KEY ID STEP 1}  SECRET={IAM SECRET STEP 1}
+aws cloudformation deploy --capabilities CAPABILITY_NAMED_IAM --profile  {YOUR_PROFILE} --template ./output.yml --stack-name transcribe2zoom --parameter-overrides REGION={REGION_TO_RUN_TRANSCRIBE_IN}
 ```
 
-## Step 3. Configure the App.
+## Step 2. Configure the App.
 
-3.1 After deploying the CloudFormation Stack get the API Gateway Invoke URL that is required to communicate with the backend Lambda and create a Pre-Signed URL.
+2.1 Copy the `config.json.tpl` to `config.json`
+
+```
+ cp config.json.tpl config.json
+```
+
+2.2 After deploying the CloudFormation Stack get the API Gateway Invoke URL that is required to communicate with the backend Lambda and create a Pre-Signed URL.
 
 Goto the AWS Console -> API Gateway -> transcribe2zoom-api -> Stages ->
 
 ![alt text](images/aws_apigateway_invokeurl.png "API Gateway Endpoint")
 
-3.2 Copy the API Gateway Invoke URL to the application config file config/config.json.tpl  :
+2.3 Copy the API Gateway Invoke URL to the application config file `config/config.json`:
 ```
     'api_gateway_endpoint': 'https://YOUR-API-URL.execute-api.ca-central-1.amazonaws.com/v1/presign',
 
 ```
 
-3.3 The application requires a CORS proxy add a proxy end point to the config/config.json.tpl file:
+2.4 The application requires a CORS proxy add a proxy end point to the `config/config.json` file:
 
 ```
 
     'cors_proxy_url': 'https://cors-anywhere.herokuapp.com/'
 
 ```
-*for this PoC we are using the CORS Anywhere Heroku app but for production would recommend replacing with your own managed service.  
+*for this PoC we are using the CORS Anywhere Heroku app but for production would recommend replacing with your own managed service.
 
 
-3.4 Rename the config.json.tpl to config.json 
+## Step 3. Launch the Amplify App:
 
-```
- cp config.json.tpl config.json
-```
-
-
-## Step 4. Launch the Amplify App:
-
-Since this app is essentially enitely a static front end application hosting via Amplify is a viable option. To do so create a *private Github (saying private just because you have your API endpoints in the repo which you may not want commited) repo and copy this code over. 
+Since this app is essentially enitely a static front end application hosting via Amplify is a viable option. To do so create a *private Github (saying private just because you have your API endpoints in the repo which you may not want commited) repo and copy this code over.
 
 Replace your region and add your repo URL to the following example Amplify Deploy URL:
 

@@ -129,7 +129,6 @@ exports.handler = async (event) => {
     }
     let endpoint = "transcribestreaming." + region + ".amazonaws.com:8443";
     let url = exports.createPresignedURL(
-    
         'GET',
         endpoint,
         '/stream-transcription-websocket',
@@ -143,6 +142,6 @@ exports.handler = async (event) => {
             'region': region,
             'query': "language-code=" + languageCode + "&media-encoding=pcm&sample-rate=" + sampleRate
         }
-        )
-return url;   
+    )
+    return url;
 };
