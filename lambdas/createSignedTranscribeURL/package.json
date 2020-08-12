@@ -1,0 +1,13 @@
+{
+  "name": "amazon-transcribe-websocket-static",
+  "description": "Real-time audio transcription via Amazon Transcribe over a WebSocket to zoom CC endpoint.",
+  "version": "1.0.0",
+  "author": {
+    "name": "UBC CIC / Amazon Web Services",
+    "email": "",
+    "url": "http://aws.amazon.com/"
+  },
+  "dependencies": {
+    "query-string": "^6.13.1"
+  }
+}

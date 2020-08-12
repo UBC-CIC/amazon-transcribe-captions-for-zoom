@@ -1,0 +1,233 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS Transcribe Close Caption for Zoom 
+
+Parameters:
+  REGION:
+    Type: String
+    Description: 'Region to run transcribe in'
+    Default: ca-central-1
+
+  ACCESSKEYID:
+    Type: String
+    Description: 'AWS account id for transcribe'
+    Default: access_key_id
+  SECRET:
+    Type: String
+    Description: 'AWS secret to be used with transcribe'
+    Default: secret
+
+Resources:
+  PreSignedUrlLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Creating a Pre-Signed URL for use with transcribe websocket.
+      CodeUri: ./lambdas/createSignedTranscribeURL
+      Handler: index.handler
+      Environment:
+        Variables:
+          ACCESS_KEY_ID: !Ref ACCESSKEYID
+          SECRET: !Ref SECRET
+          REGION: !Ref REGION
+      MemorySize: 128
+      Role: !GetAtt PreSignedUrlLambdaRole.Arn
+      Runtime: nodejs10.x
+      Timeout: 30
+
+  PreSignedUrlLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action:
+          - sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service: 
+            - lambda.amazonaws.com
+            - apigateway.amazonaws.com
+        Version: '2012-10-17'
+      Policies:
+      - PolicyDocument:
+          Statement:
+            Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Effect: Allow
+            Resource: arn:aws:logs:*:*:*
+        PolicyName: PreSignedUrlLambdaLogs
+      - PolicyDocument:
+          Statement:
+            Action:
+            - lambda:InvokeAsync
+            - lambda:InvokeFunction
+            Effect: Allow
+            Resource: '*'
+        PolicyName: InvokePreSignedUrlLambda
+
+  PreSignedUrlLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt PreSignedUrlLambda.Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${TranscribePresignRestApi}/*/GET/presign'
+
+  PreSignUrlApiResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt TranscribePresignRestApi.RootResourceId
+      PathPart: presign
+      RestApiId:
+        Ref: TranscribePresignRestApi
+
+  InvokesPreSignedUrlLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action:
+          - sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service: 
+            - lambda.amazonaws.com
+            - apigateway.amazonaws.com
+      Policies:
+      - PolicyDocument:
+          Statement:
+            Action: lambda:InvokeFunction
+            Effect: Allow
+            Resource: '*'
+        PolicyName: InvokePreSignedUrlLambda
+
+
+  ApiGatewayAccount:
+    Type: AWS::ApiGateway::Account
+    Properties:
+      CloudWatchRoleArn: !GetAtt ApiGatewayCloudWatchLogsRole.Arn
+
+  ApiGatewayCloudWatchLogsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action:
+          - sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+            - apigateway.amazonaws.com
+        Version: '2012-10-17'
+      Policies:
+      - PolicyDocument:
+          Statement:
+          - Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:DescribeLogGroups
+            - logs:DescribeLogStreams
+            - logs:PutLogEvents
+            - logs:GetLogEvents
+            - logs:FilterLogEvents
+            Effect: Allow
+            Resource: '*'
+          Version: '2012-10-17'
+        PolicyName: ApiGatewayLogsPolicy
+
+
+  TranscribePresignRestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Description: Endoint for lambda integration used to generate a presigneDURL
+      FailOnWarnings: true
+      Name: !Sub ${AWS::StackName}-api
+
+  TranscribePresignGET:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      AuthorizationType: NONE
+      HttpMethod: GET
+      Integration:
+        Credentials: !Sub 'arn:aws:iam::${AWS::AccountId}:role/${InvokesPreSignedUrlLambdaRole}'
+        IntegrationHttpMethod: POST
+        IntegrationResponses:
+        - ResponseTemplates:
+            application/json: $input.path('$')
+          StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+            method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        PassthroughBehavior: WHEN_NO_TEMPLATES
+        RequestTemplates:
+          application/json:
+            Fn::Sub: "{ \"language\": \"$input.params('language')\"}"
+        Type: AWS
+        Uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PreSignedUrlLambda.Arn}/invocations'
+      MethodResponses:
+      - StatusCode: 200
+        ResponseParameters:
+          method.response.header.Access-Control-Allow-Headers: false
+          method.response.header.Access-Control-Allow-Methods: false
+          method.response.header.Access-Control-Allow-Origin: false
+        ResponseModels: { "application/json": "Empty" }
+      RestApiId:
+        Ref: TranscribePresignRestApi
+      ResourceId:
+        Ref: PreSignUrlApiResource
+
+  Transcribe2ZoomRestApiGatewayRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action:
+          - sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+            - apigateway.amazonaws.com
+        Version: '2012-10-17'
+      Path: /
+      Policies:
+      - PolicyDocument:
+          Statement:
+          - Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvent
+            Effect: Allow
+            Resource: arn:aws:logs:*:*:*
+          Version: '2012-10-17'
+        PolicyName: Logs
+
+  # TranscribeSignUrlAPIStage:
+  #   Type: AWS::ApiGateway::Stage
+  #   DependsOn:
+  #   - ApiGatewayAccount
+  #   Properties:
+  #     DeploymentId:
+  #       Ref: TranscribeSignUrlApiDeployment
+  #     MethodSettings:
+  #     - HttpMethod: GET
+  #       MetricsEnabled: 'true'
+  #       LoggingLevel: INFO
+  #       ResourcePath: /*
+  #     RestApiId:
+  #       Ref: TranscribePresignRestApi
+  #     StageName: PROD
+
+  TranscribeSignUrlApiDeployment:
+      Type: AWS::ApiGateway::Deployment
+      DependsOn:
+      - TranscribePresignGET
+      Properties:
+        RestApiId:
+          Ref: TranscribePresignRestApi
+        StageName: v1
+        StageDescription:
+          MetricsEnabled: true
+    

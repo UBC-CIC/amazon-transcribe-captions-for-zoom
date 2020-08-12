@@ -1,0 +1,49 @@
+{
+  "name": "amazon-transcribe-websocket-static",
+  "description": "Real-time audio transcription via Amazon Transcribe over a WebSocket to zoom CC endpoint.",
+  "version": "1.0.0",
+  "author": {
+    "name": "UBC CIC / Amazon Web Services",
+    "email": "cic.info@ubc.ca",
+    "url": "http://aws.amazon.com/"
+  },
+  "scripts": {
+    "build": "browserify lib/main.js -o dist/main.js -d"
+  },
+  "keywords": [],
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "@babel/preset-env"
+          ],
+          "plugins": [
+            "@babel/transform-runtime"
+          ]
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "@aws-sdk/eventstream-marshaller": "0.1.0-preview.2",
+    "@aws-sdk/util-utf8-node": "0.1.0-preview.1",
+    "axios": "^0.19.2",
+    "lodash": "^4.17.19",
+    "browserify": "^16.5.1",
+    "browserify-require-async": "^0.4.0",
+    "crypto": "^1.0.1",
+    "local-web-server": "^3.0.7",
+    "microphone-stream": "^5.0.1",
+    "path": "^0.12.7",
+    "query-string": "^6.13.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/preset-stage-0": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.10.5",
+    "babelify": "^10.0.0"
+  }
+}

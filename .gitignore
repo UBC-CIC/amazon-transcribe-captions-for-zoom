@@ -1,0 +1,6 @@
+/dist/*
+/node_modules/*
+.env
+output.yaml
+output.yml
+/config/config.json
