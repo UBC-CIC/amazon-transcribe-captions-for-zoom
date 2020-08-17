@@ -63,13 +63,20 @@ Goto the AWS Console -> API Gateway -> transcribe2zoom-api -> Stages ->
 
 ```
 
-2.4 The application requires a CORS proxy add a proxy end point to the `config/config.json` file:
+2.4 The application requires a HTTP CORS proxy to communicate with the Zoom CC API endpoint. 
+
+Goto the AWS Console -> API Gateway -> http-cors-proxy-for-zoom-cc-api
+
+
+![alt text](images/http_proxy_screen_shot.png "HTTP CORS Proxy API")
+
+Copy the API Gateway Invoke URL to the application config file `config/config.json`:
+
+```
+'http_cors_proxy_api': 'https://YOUR-HTTP-PROXY-API.execute-api.ca-central-1.amazonaws.com',
 
 ```
 
-    'cors_proxy_url': 'https://cors-anywhere.herokuapp.com/'
-
-```
 *for this PoC we are using the CORS Anywhere Heroku app but for production would recommend replacing with your own managed service.
 
 

@@ -5,7 +5,7 @@
   "author": {
     "name": "UBC CIC / Amazon Web Services",
     "email": "",
-    "url": "http://aws.amazon.com/"
+    "url": ""
   },
   "dependencies": {
     "query-string": "^6.13.1"
