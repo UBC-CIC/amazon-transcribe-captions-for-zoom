@@ -77,9 +77,6 @@ Copy the API Gateway Invoke URL to the application config file `config/config.js
 
 ```
 
-*for this PoC we are using the CORS Anywhere Heroku app but for production would recommend replacing with your own managed service.
-
-
 ## Step 3. Launch the Amplify App:
 
 Since this app is essentially enitely a static front end application hosting via Amplify is a viable option. To do so create a *private Github (saying private just because you have your API endpoints in the repo which you may not want commited) repo and copy this code over.
