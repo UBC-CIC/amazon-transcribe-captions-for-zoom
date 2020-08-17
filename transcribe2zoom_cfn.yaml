@@ -8,6 +8,11 @@ Parameters:
     Description: 'Region to run transcribe in'
     Default: ca-central-1
 
+  ZOOMCCAPIENDPOINT:
+    Type: String
+    Description: 'Zoom CC API endpoint'
+    Default: https://wmcc.zoom.us/closedcaption
+
 Resources:
   TranscribeStreamingUser:
     Type: AWS::IAM::User
@@ -151,9 +156,9 @@ Resources:
   TranscribePresignRestApi:
     Type: AWS::ApiGateway::RestApi
     Properties:
-      Description: Endoint for lambda integration used to generate a presigneDURL
+      Description: Endoint for lambda integration used to generate a pre signed URL for the transcribe
       FailOnWarnings: true
-      Name: !Sub ${AWS::StackName}-api
+      Name: transcribe2zoom-api
 
   TranscribePresignGET:
     Type: AWS::ApiGateway::Method
@@ -241,4 +246,46 @@ Resources:
         StageName: v1
         StageDescription:
           MetricsEnabled: true
-    
+
+  ## HTTP Cors Proxy API
+  ## Requred to communicate with Zoom CC API endpoint
+  HttpCorsProxyApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: http-cors-proxy-for-zoom-cc-api
+      Description: HTTP Proxy for Zoom CC 
+      CorsConfiguration:
+        AllowOrigins: 
+          - '*'
+      ProtocolType: HTTP
+
+  HttpProxyIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref HttpCorsProxyApi
+      Description: HTTP Proxy Integration for Zoom CC API Endpoint
+      IntegrationType: HTTP_PROXY
+      IntegrationMethod: POST
+      IntegrationUri: !Ref ZOOMCCAPIENDPOINT
+      PayloadFormatVersion: 1.0
+
+  HttpCorsProxyApiRoute:
+    Type: AWS::ApiGatewayV2::Route
+    DependsOn:
+    - HttpProxyIntegration
+    Properties:
+      ApiId: !Ref HttpCorsProxyApi
+      RouteKey: $default
+      Target: !Join 
+        - /
+        - - integrations
+          - !Ref HttpProxyIntegration
+
+  HttpCorsProxyApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref HttpCorsProxyApi
+      AutoDeploy: true
+      StageName: $default
+
+
