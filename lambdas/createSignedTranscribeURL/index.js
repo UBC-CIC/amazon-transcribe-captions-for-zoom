@@ -10,6 +10,9 @@ const secret = process.env.SECRET;
 
 
 
+// Copied from https://github.com/department-stockholm/aws-signature-v4
+// and fixed the sorting of query parameters by using 'query-string' package instead of 'querystring'
+// modified to use with this lambda
 
 exports.createCanonicalRequest = function(method, pathname, query, headers, payload) {
     return [
