@@ -107,7 +107,7 @@ ws --log.format dev
 
 After meeting the Zoom requirements. 
 
-Launching a new Zoom meeting on the meeting room task bar bar click on the Close Caption icon and "Copy the API token" this will be used in the AWS Real Time Transcribe app.
+Launch a new Zoom meeting, on the meeting room task bar click on the Close Caption icon and "Copy the API token" this will be used in the AWS Real Time Transcribe app.
 
 
 ![alt text](images/zoom_enable_cc.png "Use a 3rd party CC service")
