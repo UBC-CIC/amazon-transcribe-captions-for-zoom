@@ -128,7 +128,7 @@ This is a Proof of Concept it would be highly recommended to add an authenticati
 
 ### Credits
 
-This project is largely based on code written by Karan Grover from the Amazon Transcribe team, who did the hard work (audio encoding, event stream marshalling) and modified for use with Zoom by the team at the UBC Cloud Innovation Centre. 
+This project is largely based on code written for the Amazon Transcribe Websocket Static project https://github.com/aws-samples/amazon-transcribe-websocket-static  and modified for use with Zoom by the team at the UBC Cloud Innovation Centre. 
 
 ## License
 
