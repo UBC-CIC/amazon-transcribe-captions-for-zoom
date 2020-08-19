@@ -13,7 +13,7 @@ This proof of concept demonstrates how you can use Amazon Transcribe as a third 
     * Verify that Closed Caption is enabled.
     * If the setting is disabled, click the toggle to enable it. 
     * If a verification dialog displays, click Turn On to verify the change.
-    * Enable Save Captions to allow participants to save fully closed captions or transcripts 
+    * Enable Save Captions to allow participants to save transcripts at the end of Zoom session 
 
 ## Architecture
 
