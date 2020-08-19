@@ -1,6 +1,6 @@
-## Amazon Transcribe Close Captioning for Zoom Proof of Concept.
+## Amazon Transcribe Close Captioning for Zoom Proof of Concept
 
-This PoC demonstrates how you can use Amazon Transcribe as a third party close captioning service for Zoom. The concept was initiated to find solution a for instructors to provide near real time close captions for traidtional style lectures taking place in Zoom. The foundation of this PoC is based of the [AWS Samples - Amazon Transcribe Websocket Static](https://github.com/aws-samples/amazon-transcribe-websocket-static) project. 
+This proof of concept demonstrates how you can use Amazon Transcribe as a third party close captioning service for Zoom. The concept was initiated to find solution a for instructors to provide near real time close captions for traidtional style lectures taking place in Zoom. The foundation of this PoC is based of the [AWS Samples - Amazon Transcribe Websocket Static](https://github.com/aws-samples/amazon-transcribe-websocket-static) project. 
 
 
 ## Zoom Requirements
@@ -14,6 +14,11 @@ This PoC demonstrates how you can use Amazon Transcribe as a third party close c
     * If the setting is disabled, click the toggle to enable it. 
     * If a verification dialog displays, click Turn On to verify the change.
     * Enable Save Captions to allow participants to save fully closed captions or transcripts 
+
+## Architecture
+
+![alt text](images/transcribe-captions_final.png "Amazon Transcribe Close Captioning for Zoom")
+
 
 ## Building and Deploying 
 
