@@ -1,6 +1,6 @@
-## Amazon Transcribe Close Captioning for Zoom Proof of Concept
+## Amazon Transcribe Real Time Close Captioning for Zoom Proof of Concept
 
-This proof of concept demonstrates how you can use Amazon Transcribe as a third party close captioning service for Zoom. The concept was initiated to find solution a for instructors to provide near real time close captions for traidtional style lectures taking place in Zoom. The foundation of this PoC is based of the [AWS Samples - Amazon Transcribe Websocket Static](https://github.com/aws-samples/amazon-transcribe-websocket-static) project. 
+This proof of concept demonstrates how you can use Amazon Transcribe as a third party close captioning service for Zoom. The concept was initiated to find a solution for instructors to provide real time close captions during traidtional style lectures taking place in Zoom. The foundation of this PoC is based of the [AWS Samples - Amazon Transcribe Websocket Static](https://github.com/aws-samples/amazon-transcribe-websocket-static) project. 
 
 
 ## Zoom Requirements
@@ -23,9 +23,7 @@ This proof of concept demonstrates how you can use Amazon Transcribe as a third 
 ## Building and Deploying 
 
 ### Step 1.
-This application requires an API Gateway endpoint and Lambda to Pre-Signed URL
-
-Run the cloudformation script:
+This application requires an API Gateway endpoints and a Lambda to create a Pre-Signed WebSocket URL 
 
 1.1 create a s3 deployment bucket
 ```
@@ -84,14 +82,15 @@ Copy the API Gateway Invoke URL to the application config file `config/config.js
 
 ## Step 3. Launch the Amplify App:
 
-Since this app is essentially enitely a static front end application hosting via Amplify is a viable option. To do so create a *private Github (saying private just because you have your API endpoints in the repo which you may not want commited) repo and copy this code over.
+To do so create a *private Github repo and copy this code over.
 
-Replace your region and add your repo URL to the following example Amplify Deploy URL:
+Replace your region and add your repo URL in the following example Amplify Deploy URL:
 
 ```
-https://ca-central-1.console.aws.amazon.com/amplify/home?region=ca-central-1#/deploy?repo=https://github.com/YOUR-GITHUB-REPO
+https://YOUR-REGION.console.aws.amazon.com/amplify/home?region=YOUR-REGION#/deploy?repo=https://github.com/YOUR-GITHUB-REPO
 ```
-## Alternative how to test / run the front end client locally
+
+## Alternative how to test / run the front end client locally or on an alternative application host
 
 Even though this is a static site there is a build step required. Some of the modules used were originally made for server-side code and do not work natively in the browser.
 
@@ -112,7 +111,7 @@ ws --log.format dev
 
 After meeting the Zoom requirements. 
 
-Launch a new Zoom meeting, on the meeting room task bar click on the Close Caption icon and "Copy the API token" this will be used in the AWS Real Time Transcribe app.
+Launch a new Zoom meeting, on the meeting room task bar click on the Close Caption icon and "Copy the API token" this will be used in the transcription application.
 
 
 ![alt text](images/zoom_enable_cc.png "Use a 3rd party CC service")
@@ -123,13 +122,13 @@ Paste the token and select language:
 ![alt text](images/zoom_paste_token.png "Paste Zoom token")
 
 
-Hit the Start button when you are ready to start recording audio to be transcribed. This will prompt a browser response to grant access to your microphone click Allow.
+Hit the Start button when you are ready to start recording audio to be transcribed. This will prompt a browser response to grant access to your microphone click 'Allow'.
 
 ![alt text](images/allow_microphone_access.png "Allow Microphone Access")
 
 ### Further Recommendations
 
-This is a Proof of Concept it would be highly recommended to add an authentication layer to this if deploying on campus, one simple solution maybe be an Apache Webhost / Shibboleth and host the static files in the protected directory. 
+This is a proof of concept it would be highly recommended to add an authentication layer to this if deploying on campus.  
 
 ### Credits
 
