@@ -1,6 +1,6 @@
 ## Amazon Transcribe Real Time Close Captioning for Zoom Proof of Concept
 
-This proof of concept demonstrates how you can use Amazon Transcribe as a third party close captioning service for Zoom. The concept was initiated to find a solution for instructors to provide real time close captions during traditional style lectures taking place in Zoom. The foundation of this PoC is based of the [AWS Samples - Amazon Transcribe Websocket Static](https://github.com/aws-samples/amazon-transcribe-websocket-static) project. 
+This proof of concept demonstrates how you can use Amazon Transcribe as a third party close captioning service for Zoom. The concept was initiated to find a solution for instructors to provide real time close captions during lectures taking place in Zoom. The foundation of this PoC is based of the [AWS Samples - Amazon Transcribe Websocket Static](https://github.com/aws-samples/amazon-transcribe-websocket-static) project. 
 
 
 ## Zoom Requirements
@@ -84,7 +84,7 @@ Goto the AWS Console -> API Gateway -> http-cors-proxy-for-zoom-cc-api
 
 Amplify  offers Git-based deployments with features like CI/CD and branch previews.
 
-Following the instructions outlined in this document to implement a Git based deploy https://docs.aws.amazon.com/amplify/latest/userguide/getting-started.html 
+Follow the instructions outlined in follwing document to implement a Git based deploy: https://docs.aws.amazon.com/amplify/latest/userguide/getting-started.html 
 
 ## Alternative how to test / run the front end client locally 
 
@@ -124,7 +124,7 @@ Hit the Start button when you are ready to start recording audio to be transcrib
 
 ### Further Recommendations
 
-This is a proof of concept it would be highly recommended to add an authentication layer to this if deploying on campus.  
+This is a proof of concept it would be highly recommended to add an authentication layer if deploying on campus.  
 
 ### Credits
 
