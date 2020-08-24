@@ -80,17 +80,13 @@ Goto the AWS Console -> API Gateway -> http-cors-proxy-for-zoom-cc-api
 
 ```
 
-## Step 3. Launch the Amplify App:
+## Step 3. Launch the Amplify App via Git:
 
-To do so create a *private Github repo and copy this code over.
+Amplify  offers Git-based deployments with features like CI/CD and branch previews.
 
-Replace your region and add your repo URL in the following example Amplify Deploy URL:
+Following the instructions outlined in this document to implement a Git based deploy https://docs.aws.amazon.com/amplify/latest/userguide/getting-started.html 
 
-```
-https://YOUR-REGION.console.aws.amazon.com/amplify/home?region=YOUR-REGION#/deploy?repo=https://github.com/YOUR-GITHUB-REPO
-```
-
-## Alternative how to test / run the front end client locally or on an alternative application host
+## Alternative how to test / run the front end client locally 
 
 Even though this is a static site there is a build step required. Some of the modules used were originally made for server-side code and do not work natively in the browser.
 
