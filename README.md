@@ -1,10 +1,10 @@
-## Amazon Transcribe Real Time Close Captioning for Zoom Proof of Concept
+## Amazon Transcribe Real Time Closed Captioning for Zoom Proof of Concept
 
-This proof of concept demonstrates how you can use Amazon Transcribe as a third party close captioning service for Zoom. The concept was initiated to find a solution for instructors to provide real time close captions during lectures taking place in Zoom. The foundation of this PoC is based of the [AWS Samples - Amazon Transcribe Websocket Static](https://github.com/aws-samples/amazon-transcribe-websocket-static) project. 
+This proof of concept demonstrates how you can use Amazon Transcribe as a third party closed captioning service for Zoom. The concept was initiated to find a solution for instructors to provide real time closed captions during lectures taking place in Zoom. The foundation of this PoC is based of the [AWS Samples - Amazon Transcribe Websocket Static](https://github.com/aws-samples/amazon-transcribe-websocket-static) project. 
 
 
 ## Zoom Requirements
-1) The Account admin has enabled the ability for users to enable close captions.
+1) The Account admin has enabled the ability for users to enable closed captions.
 
 2) Users to enable the closed captioning for your own use:
     * Sign in to the Zoom web portal.
@@ -17,7 +17,7 @@ This proof of concept demonstrates how you can use Amazon Transcribe as a third 
 
 ## Architecture
 
-![alt text](images/transcribe-captions_final.png "Amazon Transcribe Close Captioning for Zoom")
+![alt text](images/transcribe-captions_final.png "Amazon Transcribe Closed Captioning for Zoom")
 
 
 ## Building and Deploying 
@@ -107,12 +107,12 @@ ws --log.format dev
 
 After meeting the Zoom requirements. 
 
-Launch a new Zoom meeting, on the meeting room task bar click on the Close Caption icon and "Copy the API token" this will be used in the transcription application.
+Launch a new Zoom meeting, on the meeting room task bar click on the Closed Caption icon and "Copy the API token" this will be used in the transcription application.
 
 
 ![alt text](images/zoom_enable_cc.png "Use a 3rd party CC service")
 
-Next goto the Real-time Audio Transcription Close Captioning for Zoom URL
+Next goto the Real-time Audio Transcription Closed Captioning for Zoom URL
 
 Paste the token and select language:
 ![alt text](images/zoom_paste_token.png "Paste Zoom token")
