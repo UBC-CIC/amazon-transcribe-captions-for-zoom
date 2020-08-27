@@ -84,7 +84,7 @@ Goto the AWS Console -> API Gateway -> http-cors-proxy-for-zoom-cc-api
 
 Amplify  offers Git-based deployments with features like CI/CD and branch previews.
 
-Follow the instructions outlined in follwing document to implement a Git based deploy: https://docs.aws.amazon.com/amplify/latest/userguide/getting-started.html 
+Create a *private repo with your configured code and follow the instructions outlined in follwing document to implement a Git based deploy: https://docs.aws.amazon.com/amplify/latest/userguide/getting-started.html 
 
 ## Alternative how to test / run the front end client locally 
 
