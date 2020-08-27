@@ -3,7 +3,7 @@
 .env
 output.yaml
 output.yml
-
+/config/config.json
 
 #amplify
 amplify/\#current-cloud-backend
