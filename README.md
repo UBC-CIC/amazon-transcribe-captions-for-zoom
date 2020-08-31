@@ -62,8 +62,7 @@ Goto the AWS Console -> API Gateway -> transcribe2zoom-api -> Stages ->
 
 2.3 Copy the API Gateway Invoke URL to the application config file `config/config.json`:
 ```
-    'api_gateway_endpoint': 'https://YOUR-API-URL.execute-api.ca-central-1.amazonaws.com/v1/presign',
-
+    "api_gateway_endpoint": "https://YOUR-API-URL.execute-api.ca-central-1.amazonaws.com/v1/presign",
 ```
 
 2.4 The application requires a HTTP CORS proxy to communicate with the Zoom CC API endpoint. 
@@ -76,8 +75,7 @@ Goto the AWS Console -> API Gateway -> http-cors-proxy-for-zoom-cc-api
 2.5 Copy the API Gateway Invoke URL to the application config file `config/config.json`:
 
 ```
-'http_cors_proxy_api': 'https://YOUR-HTTP-PROXY-API.execute-api.ca-central-1.amazonaws.com',
-
+    "http_cors_proxy_api": "https://YOUR-HTTP-PROXY-API.execute-api.ca-central-1.amazonaws.com"
 ```
 
 ## Step 3. Launch the Amplify App via Git:
