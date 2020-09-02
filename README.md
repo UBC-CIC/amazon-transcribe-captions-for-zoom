@@ -110,7 +110,7 @@ Launch a new Zoom meeting, on the meeting room task bar click on the Closed Capt
 
 ![alt text](images/zoom_enable_cc.png "Use a 3rd party CC service")
 
-Next goto the Real-time Audio Transcription Closed Captioning for Zoom URL
+Next goto the Real-time Audio Transcription for Zoom URL
 
 Paste the token and select language:
 ![alt text](images/zoom_paste_token.png "Paste Zoom token")
