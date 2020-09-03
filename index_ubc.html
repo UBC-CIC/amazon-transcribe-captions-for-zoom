@@ -1,81 +1,758 @@
 <!DOCTYPE html>
-
+<!--[if IEMobile 7]><html class="iem7 oldie"  xmlns="http://www.w3.org/1999/xhtml" prefix="" lang="en-US"><![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="ie7 oldie"  xmlns="http://www.w3.org/1999/xhtml" prefix="" lang="en-US"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="ie8 oldie"  xmlns="http://www.w3.org/1999/xhtml" prefix="" lang="en-US"><![endif]-->
+<!--[if (IE 9)&!(IEMobile)]><html class="ie9"  xmlns="http://www.w3.org/1999/xhtml" prefix="" lang="en-US"><![endif]-->
+<!--[[if (gt IE 9)|(gt IEMobile 7)]><!--><html  xmlns="http://www.w3.org/1999/xhtml" prefix="" lang="en-US"><!--<![endif]-->
 <head>
-    <meta charset="utf-8">
-    <title>Real-time Audio Transcription for Zoom</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-    <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta24/shoelace.css">
-    <link rel="stylesheet" href="styles.css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Real-time Audio Transcription for Zoom</title>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width" /> <!-- needed for responsive -->
+<link rel="dns-prefetch" href="//cdn.ubc.ca/" />
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://zoom-captions.elearning.ubc.ca/styles.css">
+<style type="text/css">
+#real-time-audio-transcription-for-zoom {
+    padding: 2em;
+}
+
+    #real-time-audio-transcription-for-zoom .row {
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    #real-time-audio-transcription-for-zoom .col {
+        -ms-flex-preferred-size: 0;
+        flex-basis: 0;
+        -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        max-width: 100%;
+    }
+
+    #real-time-audio-transcription-for-zoom label {
+        display: inline-block;
+        margin-bottom: .25rem;
+        font-family: system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue;
+        font-weight: 400;
+        font-size: 1rem;
+        color: #111;
+        line-height: 1.5;
+    }
+
+#zoom_api_token{
+    width: 90%;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: inherit;
+    color: #111;
+    border: 1px solid #ddd;
+    border-radius: .25rem;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    background-color: #fff;
+    height: 2.25rem;
+    line-height: 2.25rem;
+    vertical-align: middle;
+    display: block;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    margin: 0;
+    -webkit-transition: border-color .1s,background-color .1s,color .1s;
+    transition: border-color .1s,background-color .1s,color .1s;
+    white-space: nowrap;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+#language{
+    position: relative;
+    background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg width='41' height='26' viewBox='0 0 41 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23000' d='M0 5.382l19.983 19.983L40.14 5.208 34.932 0 19.869 15.062 4.84.032z' fill-rule='evenodd'/%3E%3C/svg%3E);
+    background-position: right .4rem center;
+    background-repeat: no-repeat;
+    background-size: .75rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 1.5rem;
+    width: 100%;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: inherit;
+    color: #111;
+    border: 1px solid #ddd;
+    border-radius: .25rem;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    background-color: #fff;
+    height: 2.25rem;
+    line-height: 2.85rem;
+    vertical-align: middle;
+    display: block;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    margin: 0;
+    -webkit-transition: border-color .1s,background-color .1s,color .1s;
+    transition: border-color .1s,background-color .1s,color .1s;
+    white-space: nowrap;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+#transcript{
+    margin: 30px 0;
+    white-space: pre-wrap;
+    background-color: #f2f2f2;
+    height: auto;
+    resize: vertical;
+    line-height: 1.5;
+    width: 100%;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: inherit;
+    color: #111;
+    border: 1px solid #ddd;
+    border-radius: .25rem;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    vertical-align: middle;
+    display: block;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    -webkit-transition: border-color .1s,background-color .1s,color .1s;
+    transition: border-color .1s,background-color .1s,color .1s;
+    white-space: nowrap;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+#real-time-audio-transcription-for-zoom button {
+    font-family: inherit;
+    font-size: 1.5rem;
+    height: 3.25rem;
+    line-height: calc(3.25rem - 2px);
+    font-weight: inherit;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #0074d9;
+    border-radius: .25rem;
+    border: 1px solid #0074d9;
+    border-top-color: #1982dd;
+    border-bottom-color: #0068c3;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    padding: 0 .75em;
+    cursor: pointer;
+    display: inline-block;
+    -webkit-transition: all .1s;
+    transition: all .1s;
+}
+
+#real-time-audio-transcription-for-zoom button:disabled {
+    background-color: #0068c3;
+    border-top-color: #1982dd;
+    border-bottom-color: #0068c3;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    text-decoration: none;
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+#real-time-audio-transcription-for-zoom button.button-secondary {
+    color: #fff;
+    background-color: #aaa;
+    border-color: #aaa;
+    border-top-color: #b3b3b3;
+    border-bottom-color: #999;
+}
+
+#start-button{
+    margin: 5px 0;
+}
+
+#stop-button{
+    margin: 5px 0;
+}
+
+#reset-button{
+
+}
+
+
+</style>
+
+<link href="https://cdn.ubc.ca/clf/7.0.4/css/ubc-clf-full-bw.min.css" rel="stylesheet">
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://lthub.ubc.ca/xmlrpc.php" />
+
+
+<!-- BEGIN Metadata added by the Add-Meta-Tags WordPress plugin -->
+<meta name="description" content="Introduction and instructions for using Canvas, UBC&#039;s new learning platform for delivering online course content. Canvas allows instructors to share content (text, files, media), enable student collaboration, manage assignments and quizzes, assign grades, and more. Read more »" />
+<meta name="keywords" content="assessments, canvas, content authoring, content delivery, discussions, feedback and surveys, peer-based assessments, portfolios" />
+<!-- END Metadata added by the Add-Meta-Tags WordPress plugin -->
+
+<meta name="template" content="UBC Collab 1.0.4" />
+<meta name="description" content="Introduction and instructions for using Canvas, UBC&#039;s new learning platform for delivering online course content. Canvas allows instructors to share content (text, files, media), enable student collaboration, manage assignments and quizzes, assign grades, and more. Read more » " />
+<link rel='dns-prefetch' href='//cdn.ubc.ca' />
+<link rel='dns-prefetch' href='//cloud.typography.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<script type="text/javascript">
+    window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/lthub.ubc.ca\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.5.1"}};
+    !function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='subpages-navigation-base-css'  href='https://lthub.ubc.ca/wp-content/plugins/subpages-navigation/subpage-navigation-base.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='ubc-clf-whitney-css'  href='//cloud.typography.com/6804272/781004/css/fonts.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='ubc-collab-spotlight-css'  href='https://lthub.ubc.ca/wp-content/themes/wp-hybrid-clf/inc/frontpage/spotlight/css/flexslider.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://lthub.ubc.ca/wp-includes/css/dist/block-library/style.min.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='style-css'  href='https://lthub.ubc.ca/wp-content/themes/wp-hybrid-clf/style.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='tablepress-default-css'  href='https://lthub.ubc.ca/wp-content/plugins/tablepress/css/default.min.css?ver=1.12' type='text/css' media='all' />
+<style id='tablepress-default-inline-css' type='text/css'>
+.tablepress .not-started{background-color:#cee2ff;text-align:center}.tablepress .in-progress{background-color:#fffbce;text-align:center}.tablepress .active-pilot{background-color:#cefffa;text-align:center}.tablepress .completed{background-color:#d1ffce;text-align:center}.tablepress .discontinued{background-color:#ffcece;text-align:center;width:100px}
+</style>
+
+<script type='text/javascript' src='https://lthub.ubc.ca/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://lthub.ubc.ca/wp-content/plugins/enable-jquery-migrate-helper/js/jquery-migrate-1.4.1-wp.js?ver=1.4.1-wp' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='https://lthub.ubc.ca/wp-content/themes/wp-hybrid-clf/inc/navigation/js/navigation-base.js?ver=5.5.1' id='clf-navigation-base-js'></script>
+<script type='text/javascript' id='ubc-ga-shim-js-extra'>
+/* <![CDATA[ */
+var js_errors = {"wpajaxurl":"https:\/\/lthub.ubc.ca\/wp-admin\/admin-ajax.php","nonce":"321e71e0dd"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://lthub.ubc.ca/wp-content/mu-plugins/ubc-google-analytics/js/ubc-google-analytics-shim.js' id='ubc-ga-shim-js'></script>
+<link rel="https://api.w.org/" href="https://lthub.ubc.ca/wp-json/" /><link rel="alternate" type="application/json" href="https://lthub.ubc.ca/wp-json/wp/v2/pages/3782" /><link rel="canonical" href="https://lthub.ubc.ca/guides/canvas/" />
+<link rel='shortlink' href='https://lthub.ubc.ca/?p=3782' />
+<link rel="alternate" type="application/json+oembed" href="https://lthub.ubc.ca/wp-json/oembed/1.0/embed?url=https%3A%2F%2Flthub.ubc.ca%2Fguides%2Fcanvas%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://lthub.ubc.ca/wp-json/oembed/1.0/embed?url=https%3A%2F%2Flthub.ubc.ca%2Fguides%2Fcanvas%2F&#038;format=xml" />
+<script src='//sites.olt.ubc.ca/?dm=b6eb8c9d941339a1ea180d53b7bb73ed&amp;action=load&amp;blogid=2297&amp;siteid=1&amp;t=1311494362&amp;back=https%3A%2F%2Flthub.ubc.ca%2Fguides%2Fcanvas%2F' type='text/javascript'></script><link rel='stylesheet' id='custom-css-css'  href='//lthub.ubc.ca/files/custom-css/custom-css-1599102568.min.css' type='text/css' media='all' />
+
+<!-- Le fav and touch icons -->
+<link rel="shortcut icon" href="https://cdn.ubc.ca/clf/7.0.4/img/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cdn.ubc.ca/clf/7.0.4/img/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://cdn.ubc.ca/clf/7.0.4/img/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://cdn.ubc.ca/clf/7.0.4/img/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="https://cdn.ubc.ca/clf/7.0.4/img/apple-touch-icon-57-precomposed.png">
+<style type="text/css" media="screen">#ubc7-unit { background: #0065af; }</style>
 </head>
 
-<body>
-    <div class="container">
-        <h1>
-            Real-time Audio Transcription  for Zoom
-        </h1>
-        <p class="small-caps">
-            Using the <a href="https://aws.amazon.com/transcribe/">Amazon Transcribe</a> WebSocket API
-        </p>
-        Instructions:
-        <ol>
-            <li>Launch a new Zoom meeting.</li>
-            <li>In the meeting room task bar click on the 'Closed Caption' icon and click 'Copy the API token' to copy the API token to clipboard.</li>
-            <li>Paste the API token below in the 'ZOOM CC API Token' field.</li>
-            <li>Select a language in the 'Language' field if needed.</li>
-            <li>Click the 'Start' button when you are ready to start recording audio to be transcribed. This will prompt a browser response to grant access to your microphone, click 'Allow'.</li>
-        </ol>
-        <p>
-            <strong>Muting your microphone in Zoom will not mute your microphone in this tool.</strong> You will still generate captions that will be sent to the Zoom meeting unless you also click 'Stop' to stop recording below.
-        </p>
-        <p>
-            This tool will only generate captions for what you say. It will not generate captions for student questions and discussions unless they are picked up by your microphone (not recommended).
-        </p>
-        <hr/>
+<body class="page-template-default page page-id-3782 page-parent page-child parent-pageid-170 l2-column-sm l2-column page-parent-guides page-canvas page-3782 chrome primary-active secondary-inactive subsidiary-inactive">
 
-        <div id="error" class="isa_error"></div>
+<div id="body-container" class="container">
 
-        <div class="row">
-            <div class="col">
-		<label>ZOOM CC API Token:</label>
-        <input type="password" id="zoom_api_token" placeholder="ZOOM API Token" value="" />
-            </div>
-            <div class="col">
-                <label>Language: </label>
-                <select id="language">
-                    <optgroup label="English">
-                        <option value="en-US">US English (en-US)</option>
-                        <option value="en-AU">Australian English (en-AU)</option>
-                        <option value="en-GB">British English (en-GB)</option>
-                    </optgroup>
-                    <optgroup label="French">
-                        <option value="fr-CA">Canadian French (fr-CA)</option>
-                        <option value="fr-FR">French (fr-FR)</option>
-                    </optgroup>
-                    <optgroup label="Spanish">
-                        <option value="es-US">US Spanish (es-US)</option>
-                    </optgroup>
-                </select>
+    <div class="collapse expand" id="ubc7-global-menu">
+        <div id="ubc7-search" class="expand">
+            <div id="ubc7-search-box">
+                <form class="form-search" method="get" action="//www.ubc.ca/search/refine/" role="search">
+                    <input type="text" name="q" placeholder="Search Learning Technology Hub" class="input-xlarge search-query">
+                    <input type="hidden" name="label" value="Learning Technology Hub" />
+                    <input type="hidden" name="site" value="*.ubc.ca" />
+                    <button type="submit" class="btn">Search</button>
+                </form>
             </div>
         </div>
-        <textarea id="transcript" placeholder="Press Start and speak into your mic" rows="5"
-            readonly="readonly"></textarea>
-        <div class="row">
-            <div class="col">
-                <button id="start-button" class="button-xl" title="Start Transcription">
-                    <i class="fa fa-microphone"></i> Start
-                </button>
-                <button id="stop-button" class="button-xl" title="Stop Transcription" disabled="true"><i
-                        class="fa fa-stop-circle"></i> Stop
-                </button>
-                <button id="reset-button" class="button-xl button-secondary" title="Clear Transcript">
-                    Clear Transcript
-                </button>
+
+        <div id="ubc7-global-header" class="expand">
+        </div>
+    </div>
+
+    <header id="ubc7-header" class="row-fluid expand" role="banner">
+        <div class="span1">
+            <div id="ubc7-logo">
+                <a href="http://www.ubc.ca" title="The University of British Columbia (UBC)">The University of British Columbia</a>
+            </div>
+        </div>
+
+        <div class="span2">
+            <div id="ubc7-apom">
+                <a href="https://cdn.ubc.ca/clf/ref/aplaceofmind" title="UBC a place of mind">UBC - A Place of Mind</a>
+            </div>
+        </div>
+
+        <div class="span9" id="ubc7-wordmark-block">
+            <div id="ubc7-wordmark">
+                <a href="http://www.ubc.ca/" title="The University of British Columbia (UBC)">The University of British Columbia</a>
+            </div>
+            <div id="ubc7-global-utility">
+                <button type="button" data-toggle="collapse" data-target="#ubc7-global-menu"><span>UBC Search</span></button>
+                <noscript><a id="ubc7-global-utility-no-script" href="http://www.ubc.ca/" title="UBC Search">UBC Search</a></noscript>
+            </div>
+        </div>
+    </header>
+
+    <div id="ubc7-unit" class="row-fluid expand">
+        <div class="span12">
+
+            <div class="navbar">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target="#ubc7-unit-navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+            </div>
+
+            <div id="ubc7-unit-name" class="ubc7-single-element">
+                <a href="/" title="Learning Technology Hub"><span id="ubc7-unit-faculty"></span><span id="ubc7-unit-identifier">Learning Technology Hub</span></a>
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="dist/main.js"></script>
-</body>
 
+    <div id="ubc7-unit-menu" class="navbar expand" role="navigation">
+        <div class="navbar-inner expand">
+            <div class="container">
+                <div id="ubc7-unit-navigation" class="nav-collapse collapse">
+                    <ul id="menu-top-nav" class="nav">
+                        <li id="menu-item-135" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-135"><a href="https://lthub.ubc.ca/">Home</a></li>
+                        <li id="menu-item-10066" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children dropdown menu-item-10066">
+                            <div class="btn-group">
+                                <a class="btn" href="https://lthub.ubc.ca/tool-finder/">Tool Finder</a>
+                                <button class="btn droptown-toggle" aria-haspopup="true" aria-expanded="false" value="expand Tool Finder menu" data-toggle="dropdown">
+                                    <span class="ubc7-arrow blue down-arrow"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li id="menu-item-10069" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10069"><a href="https://lthub.ubc.ca/tool-finder/course-content/">Course Content</a></li>
+                                    <li id="menu-item-10070" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10070"><a href="https://lthub.ubc.ca/tool-finder/communications/">Communications</a></li>
+                                    <li id="menu-item-10075" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10075"><a href="https://lthub.ubc.ca/tool-finder/lectures-presentations/">Lectures &#038; Presentations</a></li>
+                                    <li id="menu-item-10068" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10068"><a href="https://lthub.ubc.ca/tool-finder/assignments-quizzes/">Assignments &#038; Quizzes</a></li>
+                                    <li id="menu-item-10067" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10067"><a href="https://lthub.ubc.ca/tool-finder/group-work/">Group Work</a></li>
+                                    <li id="menu-item-10071" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10071"><a href="https://lthub.ubc.ca/tool-finder/discussions/">Discussions</a></li>
+                                    <li id="menu-item-10073" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10073"><a href="https://lthub.ubc.ca/tool-finder/polls-surveys/">Polls &#038; Surveys</a></li>
+                                    <li id="menu-item-10074" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10074"><a href="https://lthub.ubc.ca/tool-finder/exams/">Exams</a></li>
+                                    <li id="menu-item-10072" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10072"><a href="https://lthub.ubc.ca/tool-finder/grading/">Grading</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li id="menu-item-171" class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor current-menu-ancestor current-menu-parent current-page-parent current_page_parent current_page_ancestor menu-item-has-children dropdown menu-item-171">
+                            <div class="btn-group">
+                                <a class="btn" href="https://lthub.ubc.ca/guides/">Tool Guides</a>
+                                <button class="btn droptown-toggle" aria-haspopup="true" aria-expanded="false" value="expand Tool Guides menu" data-toggle="dropdown">
+                                    <span class="ubc7-arrow blue down-arrow"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li id="menu-item-3995" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-3782 current_page_item menu-item-3995 active"><a href="https://lthub.ubc.ca/guides/canvas/">Canvas</a></li>
+                                    <li id="menu-item-8496" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8496"><a href="https://lthub.ubc.ca/guides/collaborate-ultra-instructor-guide/">Collaborate Ultra Instructor Guide</a></li>
+                                    <li id="menu-item-8854" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8854"><a href="https://lthub.ubc.ca/guides/proctorio-instructor-guide/">Proctorio Instructor Guide</a></li>
+                                    <li id="menu-item-8469" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8469"><a href="https://lthub.ubc.ca/guides/zoom-instructor-guide/">Zoom Instructor Guide</a></li>
+                                    <li id="menu-item-1238" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1238"><a href="https://lthub.ubc.ca/guides/all/">All Guides (A-Z)</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li id="menu-item-179" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children dropdown menu-item-179">
+                            <div class="btn-group">
+                                <a class="btn" href="https://lthub.ubc.ca/support/">Support</a>
+                                <button class="btn droptown-toggle" aria-haspopup="true" aria-expanded="false" value="expand Support menu" data-toggle="dropdown">
+                                    <span class="ubc7-arrow blue down-arrow"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li id="menu-item-1678" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1678"><a href="https://lthub.ubc.ca/support/lt-hub/">Learning Technology Support Hub</a></li>
+                                    <li id="menu-item-6863" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6863"><a href="https://lthub.ubc.ca/support/resources-for-teaching-and-learning-remotely/">Resources for Teaching &#038; Learning Remotely</a></li>
+                                    <li id="menu-item-1679" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1679"><a href="https://lthub.ubc.ca/support/instructional-units/">Instructional Support Units</a></li>
+                                    <li id="menu-item-2153" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2153"><a href="https://lthub.ubc.ca/support/educational-media-support/">Educational Media Support</a></li>
+                                    <li id="menu-item-1680" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1680"><a href="https://lthub.ubc.ca/support/help-sessions/">Focused Sessions</a></li>
+                                    <li id="menu-item-1681" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1681"><a href="https://lthub.ubc.ca/support/tech-rovers/">Learning Technology Rovers</a></li>
+                                    <li id="menu-item-309" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-309"><a href="https://lthub.ubc.ca/support/professional-development/">Professional Development</a></li>
+                                    <li id="menu-item-7333" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7333"><a href="https://lthub.ubc.ca/support/privacy/">Privacy</a></li>
+                                    <li id="menu-item-1913" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1913"><a href="https://lthub.ubc.ca/support/copyright/">Copyright</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li id="menu-item-2267" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children dropdown menu-item-2267">
+                            <div class="btn-group">
+                                <a class="btn" href="https://lthub.ubc.ca/projects/">Projects</a>
+                                <button class="btn droptown-toggle" aria-haspopup="true" aria-expanded="false" value="expand Projects menu" data-toggle="dropdown">
+                                    <span class="ubc7-arrow blue down-arrow"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li id="menu-item-3130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3130"><a href="https://lthub.ubc.ca/projects/learning-tech-environment-renewal/">Learning Technology Environment Renewal</a></li>
+                                    <li id="menu-item-3944" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3944"><a href="https://lthub.ubc.ca/projects/learning-analytics/">Learning Analytics</a></li>
+                                    <li id="menu-item-3970" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3970"><a href="https://lthub.ubc.ca/projects/3-d-learning/">3-D Learning</a></li>
+                                    <li id="menu-item-595" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-595"><a href="https://lthub.ubc.ca/projects/technology-pilots/">Technology Pilots &#038; Integrations</a></li>
+                                    <li id="menu-item-5729" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5729"><a href="https://lthub.ubc.ca/projects/request-technology/">Request Technology Adoption</a></li>
+                                    <li id="menu-item-395" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-395"><a href="https://lthub.ubc.ca/projects/share/">Share With Us</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li id="menu-item-557" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children dropdown menu-item-557">
+                            <div class="btn-group">
+                                <a class="btn" href="https://lthub.ubc.ca/governance/">Governance</a>
+                                <button class="btn droptown-toggle" aria-haspopup="true" aria-expanded="false" value="expand Governance menu" data-toggle="dropdown">
+                                    <span class="ubc7-arrow blue down-arrow"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li id="menu-item-1422" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1422"><a href="https://lthub.ubc.ca/governance/learning-tech-leadership/">Learning Technology Leadership Team</a></li>
+                                    <li id="menu-item-1418" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1418"><a href="https://lthub.ubc.ca/governance/lt-hub-leadership/">LT Hub Leadership</a></li>
+                                    <li id="menu-item-1421" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1421"><a href="https://lthub.ubc.ca/governance/innovation-committee/">Innovation Committee</a></li>
+                                    <li id="menu-item-1420" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1420"><a href="https://lthub.ubc.ca/governance/user-committee/">User Committee</a></li>
+                                    <li id="menu-item-1419" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1419"><a href="https://lthub.ubc.ca/governance/operations-committee/">Operations Committee</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div><!-- /navbar-inner -->
+    </div><!-- /navbar -->
+
+
+	<div id="container" class="expand" >
+
+		<div class="breadcrumb expand" itemprop="breadcrumb">
+            <span class="trail-begin"><a href="https://lthub.ubc.ca" title="Teaching with Technology" rel="home" class="trail-begin">Home</a></span>
+            <span class="divider">»</span>
+            <a href="https://lthub.ubc.ca/guides/" title="Tool Guides">Tool Guides</a>
+            <span class="divider">»</span>
+            <span class="trail-end">Canvas</span>
+        </div>
+
+        <div class="expand row-fluid" role="main">
+	        <div id="primary-secondary" class="sidebar aside  span3">
+		        <div id="primary">
+			        <div id="olt-subpages-navigation-widget-3" class="widget widget_subpages_navigation widget-widget_subpages_navigation">
+                        <div class="widget-wrap widget-inside">
+                            <h3 class="widget-title">Tool Guides</h3>
+		                    <div class="accordion sidenav simple subpages-navi subpages-navi-widget subpages-navi-exclusive subpages-navi-collapsible subpages-navi-auto-expand" id="parent-olt-subpages-navigation-widget-30">
+		                        <div class='single'>
+                                    <a href='https://lthub.ubc.ca/guides/all/'><div class='ubc7-arrow right-arrow'></div> All Guides (A-Z)</a>
+                                </div>
+                                <div class='single'>
+                                    <a href='https://lthub.ubc.ca/guides/campus-media-capture/'><div class='ubc7-arrow right-arrow'></div> Campus Media Capture</a>
+                                </div>
+                                <div class='single'>
+                                    <a href='https://lthub.ubc.ca/guides/camtasia/'><div class='ubc7-arrow right-arrow'></div> Camtasia</a>
+                                </div>
+
+                                <div class='accordion-group'>
+                                    <div class='accordion-heading subpages-navi-node supages-navi-level-0 opened'>
+                                        <a class='accordion-toggle' data-toggle='collapse' data-parent='#parent-olt-subpages-navigation-widget-30' href='#accordion-olt-subpages-navigation-widget-33782' role='button' aria-haspopup='true' aria-expanded='true'  aria-label='expand Canvas menu'><div class='ubc7-arrow down-arrow' aria-hidden='true'></div></a>
+                                        <a class='link opened' href='https://lthub.ubc.ca/guides/canvas/'>Canvas</a>
+                                    </div>
+                                    <div id='accordion-olt-subpages-navigation-widget-33782' class='accordion-body collapse in'>
+                                        <div class='accordion-inner'>
+                                            <a href='https://lthub.ubc.ca/guides/canvas/student-timezones-instructor-guide/'><div class='ubc7-arrow right-arrow'></div> Student Timezones Instructor Guide</a>
+                                            <a href='https://lthub.ubc.ca/guides/canvas/faculty-example-robert-russo/'><div class='ubc7-arrow right-arrow'></div> Faculty Example: An Interactive and User-Friendly Experience for Students</a>
+                                            <a href='https://lthub.ubc.ca/guides/canvas/faculty-example-intuitive-system-to-learn-for-mining-engineering-students/'><div class='ubc7-arrow right-arrow'></div> Faculty Example: Intuitive System to Learn for Mining Engineering Students</a>
+                                            <a href='https://lthub.ubc.ca/guides/canvas/canvas-faqs/'><div class='ubc7-arrow right-arrow'></div> Canvas FAQ</a>
+                                            <a href='https://lthub.ubc.ca/guides/canvas/privacy/'><div class='ubc7-arrow right-arrow'></div> Canvas &amp; Privacy</a>
+                                        </div><!-- end_inner -->
+                                    </div><!-- end_body -->
+                                </div>
+
+                                <div class='single'>
+                                    <a href='https://lthub.ubc.ca/guides/canvas-catalog/'><div class='ubc7-arrow right-arrow'></div> Canvas Catalog</a>
+                                </div>
+
+                                <div class='single'>
+                                    <a href='https://lthub.ubc.ca/guides/clas/'><div class='ubc7-arrow right-arrow'></div> CLAS</a>
+                                </div>
+
+                                <div class='single'>
+                                    <a href='https://lthub.ubc.ca/guides/collaborate-ultra-instructor-guide/'><div class='ubc7-arrow right-arrow'></div> Collaborate Ultra Instructor Guide</a>
+                                </div>
+
+                                <div class='accordion-group'>
+                                    <div class='accordion-heading subpages-navi-node supages-navi-level-0'>
+                                        <a class='accordion-toggle' data-toggle='collapse' data-parent='#parent-olt-subpages-navigation-widget-30' href='#accordion-olt-subpages-navigation-widget-33676' role='button' aria-haspopup='true' aria-expanded='true'  aria-label='expand ComPAIR menu'><div class='ubc7-arrow down-arrow' aria-hidden='true'></div></a>
+                                        <a class='link' href='https://lthub.ubc.ca/guides/compair/'>ComPAIR</a>
+                                    </div>
+                                    <div id='accordion-olt-subpages-navigation-widget-33676' class='accordion-body collapse'>
+                                        <div class='accordion-inner'>
+                                            <a href='https://lthub.ubc.ca/guides/compair/pilot/'><div class='ubc7-arrow right-arrow'></div> ComPAIR Pilot</a>
+                                        </div><!-- end_inner -->
+                                    </div><!-- end_body -->
+                                </div>
+
+                                <div class='single'>
+                                    <a href='https://lthub.ubc.ca/guides/crowdmark/'><div class='ubc7-arrow right-arrow'></div> Crowdmark</a>
+                                </div>
+
+                                <div class='accordion-group'>
+                                    <div class='accordion-heading subpages-navi-node supages-navi-level-0'>
+                                        <a class='accordion-toggle' data-toggle='collapse' data-parent='#parent-olt-subpages-navigation-widget-30' href='#accordion-olt-subpages-navigation-widget-3188' role='button' aria-haspopup='true' aria-expanded='true'  aria-label='expand edX Edge menu'><div class='ubc7-arrow down-arrow' aria-hidden='true'></div></a>
+                                        <a class='link' href='https://lthub.ubc.ca/guides/edx/'>edX Edge</a>
+                                    </div>
+                                <div id='accordion-olt-subpages-navigation-widget-3188' class='accordion-body collapse'>
+                                    <div class='accordion-inner'>
+                                        <a href='https://lthub.ubc.ca/guides/edx/astronomy-311-example/'><div class='ubc7-arrow right-arrow'></div> Faculty Example: Astronomy 311</a>
+                                        <a href='https://lthub.ubc.ca/guides/edx/research-methods-example/'><div class='ubc7-arrow right-arrow'></div> Faculty Example: Research Methods Course</a>
+                                        <a href='https://lthub.ubc.ca/guides/edx/use-cwls-with-edx/'><div class='ubc7-arrow right-arrow'></div> Use CWLs with edX</a>
+                                        <a href='https://lthub.ubc.ca/guides/edx/embed-edx-content/'><div class='ubc7-arrow right-arrow'></div> Embed edX content in LMS</a>
+                                    </div><!-- end_inner -->
+                                </div><!-- end_body -->
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/gradescope/'><div class='ubc7-arrow right-arrow'></div> Gradescope</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/iclicker-cloud-instructor-guide/'><div class='ubc7-arrow right-arrow'></div> iClicker Cloud Instructor Guide</a>
+                            </div>
+
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/iclicker-cloud-student-guide/'><div class='ubc7-arrow right-arrow'></div> iClicker Cloud Student Guide</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/ipeer/'><div class='ubc7-arrow right-arrow'></div> iPeer</a>
+                            </div>
+
+                            <div class='accordion-group'>
+                                <div class='accordion-heading subpages-navi-node supages-navi-level-0'>
+                                    <a class='accordion-toggle' data-toggle='collapse' data-parent='#parent-olt-subpages-navigation-widget-30' href='#accordion-olt-subpages-navigation-widget-3424' role='button' aria-haspopup='true' aria-expanded='true'  aria-label='expand Kaltura menu'><div class='ubc7-arrow down-arrow' aria-hidden='true'></div></a>
+                                    <a class='link' href='https://lthub.ubc.ca/guides/kaltura/'>Kaltura</a>
+                                </div>
+                                <div id='accordion-olt-subpages-navigation-widget-3424' class='accordion-body collapse'>
+                                    <div class='accordion-inner'>
+                                        <a href='https://lthub.ubc.ca/guides/kaltura/faculty-example-using-kaltura-to-share-instructional-videos-with-students/'><div class='ubc7-arrow right-arrow'></div> Faculty Example: Using Kaltura to Share Instructional Videos with Students</a>
+                                    </div><!-- end_inner -->
+                                </div><!-- end_body -->
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/lightboard/'><div class='ubc7-arrow right-arrow'></div> Lightboard</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/lockdown-browser/'><div class='ubc7-arrow right-arrow'></div> LockDown Browser</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/course-reserves-instructor-guide/'><div class='ubc7-arrow right-arrow'></div> LOCR</a>
+                            </div>
+
+                            <div class='accordion-group'>
+                                <div class='accordion-heading subpages-navi-node supages-navi-level-0'>
+                                    <a class='accordion-toggle' data-toggle='collapse' data-parent='#parent-olt-subpages-navigation-widget-30' href='#accordion-olt-subpages-navigation-widget-35815' role='button' aria-haspopup='true' aria-expanded='true'  aria-label='expand Mattermost menu'><div class='ubc7-arrow down-arrow' aria-hidden='true'></div></a>
+                                    <a class='link' href='https://lthub.ubc.ca/guides/mattermost/'>Mattermost</a>
+                                </div>
+                                <div id='accordion-olt-subpages-navigation-widget-35815' class='accordion-body collapse'>
+                                    <div class='accordion-inner'>
+                                        <a href='https://lthub.ubc.ca/guides/mattermost/mattermost-pilot/'><div class='ubc7-arrow right-arrow'></div> Mattermost Pilot</a>
+                                    </div><!-- end_inner -->
+                                </div><!-- end_body -->
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/microsoft-onedrive-instructor-guide/'><div class='ubc7-arrow right-arrow'></div> Microsoft OneDrive Instructor Guide</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/microsoft-teams-instructor-guide/'><div class='ubc7-arrow right-arrow'></div> Microsoft Teams Instructor Guide</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/one-button-studio/'><div class='ubc7-arrow right-arrow'></div> One-Button Studio</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/peerscholar/'><div class='ubc7-arrow right-arrow'></div> peerScholar</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/peerwise/'><div class='ubc7-arrow right-arrow'></div> PeerWise</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/piazza/'><div class='ubc7-arrow right-arrow'></div> Piazza</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/proctorio-instructor-guide/'><div class='ubc7-arrow right-arrow'></div> Proctorio Instructor Guide</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/survey-tool/'><div class='ubc7-arrow right-arrow'></div> Qualtrics</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/respondus-quiz/'><div class='ubc7-arrow right-arrow'></div> Respondus Quiz</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/respondus-studymate/'><div class='ubc7-arrow right-arrow'></div> Respondus Studymate</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/snagit/'><div class='ubc7-arrow right-arrow'></div> Snagit</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/turnitin/'><div class='ubc7-arrow right-arrow'></div> Turnitin</a>
+                            </div>
+                            <div class='single'>
+                                <a href='https://lthub.ubc.ca/guides/ubc-blogs/'><div class='ubc7-arrow right-arrow'></div> UBC Blogs</a>
+                            </div>
+
+                            <div class='accordion-group'>
+                                <div class='accordion-heading subpages-navi-node supages-navi-level-0'>
+                                    <a class='accordion-toggle' data-toggle='collapse' data-parent='#parent-olt-subpages-navigation-widget-30' href='#accordion-olt-subpages-navigation-widget-3456' role='button' aria-haspopup='true' aria-expanded='true'  aria-label='expand UBC Wiki menu'><div class='ubc7-arrow down-arrow' aria-hidden='true'></div></a>
+                                    <a class='link' href='https://lthub.ubc.ca/guides/ubc-wiki/'>UBC Wiki</a>
+                                </div>
+                                <div id='accordion-olt-subpages-navigation-widget-3456' class='accordion-body collapse'>
+                                    <div class='accordion-inner'>
+                                        <a href='https://lthub.ubc.ca/guides/ubc-wiki/blended-learning-example/'><div class='ubc7-arrow right-arrow'></div> Faculty Example: Wiki for Blended Learning Environment</a>
+                                    </div><!-- end_inner -->
+                                </div><!-- end_body -->
+                            </div>
+
+                            <div class='accordion-group'>
+                                <div class='accordion-heading subpages-navi-node supages-navi-level-0'>
+                                    <a class='accordion-toggle' data-toggle='collapse' data-parent='#parent-olt-subpages-navigation-widget-30' href='#accordion-olt-subpages-navigation-widget-3436' role='button' aria-haspopup='true' aria-expanded='true'  aria-label='expand VideoScribe menu'><div class='ubc7-arrow down-arrow' aria-hidden='true'></div></a>
+                                    <a class='link' href='https://lthub.ubc.ca/guides/videoscribe/'>VideoScribe</a>
+                                </div>
+                            <div id='accordion-olt-subpages-navigation-widget-3436' class='accordion-body collapse'>
+                                <div class='accordion-inner'>
+                                    <a href='https://lthub.ubc.ca/guides/videoscribe/request-license/'><div class='ubc7-arrow right-arrow'></div> Request a VideoScribe License</a>
+                                </div><!-- end_inner -->
+                            </div><!-- end_body -->
+                        </div>
+                        <div class='single'>
+                            <a href='https://lthub.ubc.ca/guides/webwork-instructor-guide/'><div class='ubc7-arrow right-arrow'></div> Webwork Instructor Guide</a>
+                        </div>
+                        <div class='single'>
+                            <a href='https://lthub.ubc.ca/guides/zoom-instructor-guide/'><div class='ubc7-arrow right-arrow'></div> Zoom Instructor Guide</a>
+                        </div>
+                    </div>
+		        </div>
+            </div>
+
+		</div><!-- #primary -->
+
+
+	</div><!-- #primary-secondary .aside -->
+
+
+	<div id="content" class="hfeed content  span9">
+
+        <!-- CIC START HERE -->
+        <div id="real-time-audio-transcription-for-zoom">
+            <h1>Real-time Audio Transcription  for Zoom</h1>
+            <p class="small-caps">Using the <a href="https://aws.amazon.com/transcribe/">Amazon Transcribe</a> WebSocket API</p>
+            Instructions:
+            <ol>
+                <li>Launch a new Zoom meeting.</li>
+                <li>In the meeting room task bar click on the 'Closed Caption' icon and click 'Copy the API token' to copy the API token to clipboard.</li>
+                <li>Paste the API token below in the 'ZOOM CC API Token' field.</li>
+                <li>Select a language in the 'Language' field if needed.</li>
+                <li>Click the 'Start' button when you are ready to start recording audio to be transcribed. This will prompt a browser response to grant access to your microphone, click 'Allow'.</li>
+            </ol>
+            <p><strong>Muting your microphone in Zoom will not mute your microphone in this tool.</strong> You will still generate captions that will be sent to the Zoom meeting unless you also click 'Stop' to stop recording below.</p>
+            <p>This tool will only generate captions for what you say. It will not generate captions for student questions and discussions unless they are picked up by your microphone (not recommended).</p>
+            <hr/>
+            <div id="error" class="isa_error"></div>
+            <div class="row">
+                <div class="col">
+                    <label>ZOOM CC API Token:</label>
+                    <input type="password" id="zoom_api_token" placeholder="ZOOM API Token" value="" />
+                </div>
+                <div class="col">
+                    <label>Language: </label>
+                    <select id="language">
+                        <optgroup label="English">
+                            <option value="en-US">US English (en-US)</option>
+                            <option value="en-AU">Australian English (en-AU)</option>
+                            <option value="en-GB">British English (en-GB)</option>
+                        </optgroup>
+                        <optgroup label="French">
+                            <option value="fr-CA">Canadian French (fr-CA)</option>
+                            <option value="fr-FR">French (fr-FR)</option>
+                        </optgroup>
+                        <optgroup label="Spanish">
+                            <option value="es-US">US Spanish (es-US)</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <textarea id="transcript" placeholder="Press Start and speak into your mic" rows="5" readonly="readonly"></textarea>
+            <div class="row">
+                <div class="col">
+                    <button id="start-button" class="button-xl" title="Start Transcription">
+                        <i class="fa fa-microphone"></i> Start
+                    </button>
+                    <button id="stop-button" class="button-xl" title="Stop Transcription" disabled="true">
+                        <i class="fa fa-stop-circle"></i> Stop
+                    </button>
+                    <button id="reset-button" class="button-xl button-secondary" title="Clear Transcript">Clear Transcript</button>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+
+        <!-- CIC END HERE -->
+
+	</div><!-- .content .hfeed -->
+
+</div>
+
+</div><!-- #body-container -->
+
+
+<!-- CLF Footer -->
+<footer id="ubc7-footer" class="expand" role="contentinfo">
+    <div class="row-fluid expand" id="ubc7-unit-footer">
+        <div class="span10" id="ubc7-unit-address">
+            <div id="ubc7-address-unit-name">Learning Technology Support Hub</div>
+            <div id="ubc7-address-street">Irving K. Barber Learning Centre</div>
+            <div id="ubc7-address-street2">2.27 – 1961 East Mall</div>
+            <div id="ubc7-address-location">
+                <span id="ubc7-address-city">Vancouver</span>, <span id="ubc7-address-province">BC</span> <span id="ubc7-address-country">Canada</span> <span id="ubc7-address-postal">V6T 1Z1</span>
+            </div>
+            <div id="ubc7-address-phone">Tel 604 827 4775</div>                                                <div id="ubc7-address-email">Email <a href="mailto:&#76;T.h&#117;&#98;&#64;ub&#99;&#46;ca">L&#84;&#46;&#104;u&#98;&#64;u&#98;&#99;.ca</a></div>            </div>
+        </div>
+        <div class="row-fluid expand ubc7-back-to-top">
+            <div class="span2">
+                <a href="#" title="Back to top">Back to top <div class="ubc7-arrow up-arrow grey"></div></a>
+            </div>
+        </div>
+        <div class="row-fluid expand" id="ubc7-global-footer">
+            <div class="span5" id="ubc7-signature"><a href="http://www.ubc.ca/" title="The University of British Columbia (UBC)">The University of British Columbia</a></div>
+        <div class="span7" id="ubc7-footer-menu"></div>
+    </div>
+    <div class="row-fluid expand" id="ubc7-minimal-footer">
+        <div class="span12">
+            <ul>
+                <li><a href="https://cdn.ubc.ca/clf/ref/emergency" title="Emergency Procedures">Emergency Procedures</a> <span class="divider">|</span></li>
+                <li><a href="https://cdn.ubc.ca/clf/ref/terms" title="Terms of Use">Terms of Use</a> <span class="divider">|</span></li>
+                <li><a href="https://cdn.ubc.ca/clf/ref/copyright" title="UBC Copyright">Copyright</a> <span class="divider">|</span></li>
+                <li><a href="https://cdn.ubc.ca/clf/ref/accessibility" title="Accessibility">Accessibility</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<!-- End of CLF Footer -->
+
+</div><!-- #body-container -->
+
+<script type="text/javascript">	jQuery(function () { jQuery('.section-widget-tabbed .nav-tabs a, widget-inside .nav-tabs a').click(function (e) { e.preventDefault();
+	jQuery(this).tab('show'); }) });
+</script>
+
+<script type='text/javascript' src='https://lthub.ubc.ca/wp-content/plugins/tabs-shortcode/support/twitter-bootstrap/twitter.bootstrap.tabs.min.js?ver=1.0' id='twitter-tab-shortcode-js'></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            //ga tracker1 network
+    ga( 'create', 'UA-8084138-1', 'auto', 'pageTracker' );
+    ga('pageTracker.send', 'pageview');
+
+            //ga tracker2 cms website tracker
+    ga( 'create', 'UA-81830690-1', 'auto', 'pageTracker2' );
+    ga('pageTracker2.send', 'pageview');
+</script>
+<link rel='stylesheet' id='wiki-embed-style-css'  href='https://lthub.ubc.ca/wp-content/plugins/wiki-embed/resources/css/wiki-embed.css?ver=0.9' type='text/css' media='screen' />
+<script type='text/javascript' src='https://cdn.ubc.ca/clf/7.0.4/js/ubc-clf.min.js?ver=1' id='clf-js'></script>
+<script type='text/javascript' src='https://lthub.ubc.ca/wp-includes/js/wp-embed.min.js?ver=5.5.1' id='wp-embed-js'></script>
+<script type='text/javascript' src='https://lthub.ubc.ca/wp-content/plugins/subpages-navigation/subpages-navigation-ubc-collab.js?ver=1' id='subpages-navigation-js'></script>
+
+</body>
 </html>
