@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Real-time Audio Transcription for Zoom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta24/shoelace.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>
+            Real-time Audio Transcription  for Zoom
+        </h1>
+        <p class="small-caps">
+            Using the <a href="https://aws.amazon.com/transcribe/">Amazon Transcribe</a> WebSocket API
+        </p>
+        Instructions:
+        <ol>
+            <li>Launch a new Zoom meeting.</li>
+            <li>In the meeting room task bar click on the 'Closed Caption' icon and click 'Copy the API token' to copy the API token to clipboard.</li>
+            <li>Paste the API token below in the 'ZOOM CC API Token' field.</li>
+            <li>Select a language in the 'Language' field if needed.</li>
+            <li>Click the 'Start' button when you are ready to start recording audio to be transcribed. This will prompt a browser response to grant access to your microphone, click 'Allow'.</li>
+        </ol>
+        <p>
+            <strong>Muting your microphone in Zoom will not mute your microphone in this tool.</strong> You will still generate captions that will be sent to the Zoom meeting unless you also click 'Stop' to stop recording below.
+        </p>
+        <p>
+            This tool will only generate captions for what you say. It will not generate captions for student questions and discussions unless they are picked up by your microphone (not recommended).
+        </p>
+        <hr/>
+
+        <div id="error" class="isa_error"></div>
+
+        <div class="row">
+            <div class="col">
+		<label>ZOOM CC API Token:</label>
+        <input type="password" id="zoom_api_token" placeholder="ZOOM API Token" value="" />
+            </div>
+            <div class="col">
+                <label>Language: </label>
+                <select id="language">
+                    <optgroup label="English">
+                        <option value="en-US">US English (en-US)</option>
+                        <option value="en-AU">Australian English (en-AU)</option>
+                        <option value="en-GB">British English (en-GB)</option>
+                    </optgroup>
+                    <optgroup label="French">
+                        <option value="fr-CA">Canadian French (fr-CA)</option>
+                        <option value="fr-FR">French (fr-FR)</option>
+                    </optgroup>
+                    <optgroup label="Spanish">
+                        <option value="es-US">US Spanish (es-US)</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+        <textarea id="transcript" placeholder="Press Start and speak into your mic" rows="5"
+            readonly="readonly"></textarea>
+        <div class="row">
+            <div class="col">
+                <button id="start-button" class="button-xl" title="Start Transcription">
+                    <i class="fa fa-microphone"></i> Start
+                </button>
+                <button id="stop-button" class="button-xl" title="Stop Transcription" disabled="true"><i
+                        class="fa fa-stop-circle"></i> Stop
+                </button>
+                <button id="reset-button" class="button-xl button-secondary" title="Clear Transcript">
+                    Clear Transcript
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="dist/main.js"></script>
+</body>
+
+</html>
