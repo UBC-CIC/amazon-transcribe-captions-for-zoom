@@ -14,11 +14,10 @@
 
 <!-- Stylesheets -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-<link rel="stylesheet" href="https://zoom-captions.elearning.ubc.ca/styles.css">
 <style type="text/css">
-#real-time-audio-transcription-for-zoom {
-    padding: 2em;
-}
+    #real-time-audio-transcription-for-zoom {
+        padding: 2em;
+    }
 
     #real-time-audio-transcription-for-zoom .row {
         display: flex;
@@ -26,6 +25,7 @@
         flex-wrap: wrap;
         margin-left: 0;
         margin-right: 0;
+        padding-bottom: 20px;
     }
 
     #real-time-audio-transcription-for-zoom .col {
@@ -47,150 +47,168 @@
         line-height: 1.5;
     }
 
-#zoom_api_token{
-    width: 90%;
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: inherit;
-    color: #111;
-    border: 1px solid #ddd;
-    border-radius: .25rem;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-    background-color: #fff;
-    height: 2.25rem;
-    line-height: 2.25rem;
-    vertical-align: middle;
-    display: block;
-    padding-left: .5rem;
-    padding-right: .5rem;
-    margin: 0;
-    -webkit-transition: border-color .1s,background-color .1s,color .1s;
-    transition: border-color .1s,background-color .1s,color .1s;
-    white-space: nowrap;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-}
+    #zoom_api_token{
+        width: 90%;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: inherit;
+        color: #111;
+        border: 1px solid #ddd;
+        border-radius: .25rem;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+        background-color: #fff;
+        height: 2.25rem;
+        line-height: 2.25rem;
+        vertical-align: middle;
+        display: block;
+        padding: 0px .5rem;
+        margin: 0;
+        -webkit-transition: border-color .1s,background-color .1s,color .1s;
+        transition: border-color .1s,background-color .1s,color .1s;
+        white-space: nowrap;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+    }
 
-#language{
-    position: relative;
-    background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg width='41' height='26' viewBox='0 0 41 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23000' d='M0 5.382l19.983 19.983L40.14 5.208 34.932 0 19.869 15.062 4.84.032z' fill-rule='evenodd'/%3E%3C/svg%3E);
-    background-position: right .4rem center;
-    background-repeat: no-repeat;
-    background-size: .75rem;
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-right: 1.5rem;
-    width: 100%;
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: inherit;
-    color: #111;
-    border: 1px solid #ddd;
-    border-radius: .25rem;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-    background-color: #fff;
-    height: 2.25rem;
-    line-height: 2.85rem;
-    vertical-align: middle;
-    display: block;
-    padding-left: .5rem;
-    padding-right: .5rem;
-    margin: 0;
-    -webkit-transition: border-color .1s,background-color .1s,color .1s;
-    transition: border-color .1s,background-color .1s,color .1s;
-    white-space: nowrap;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-}
+    #language{
+        position: relative;
+        background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg width='41' height='26' viewBox='0 0 41 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23000' d='M0 5.382l19.983 19.983L40.14 5.208 34.932 0 19.869 15.062 4.84.032z' fill-rule='evenodd'/%3E%3C/svg%3E);
+        background-position: right .4rem center;
+        background-repeat: no-repeat;
+        background-size: .75rem;
+        padding: 0px 1.5rem;
+        width: 100%;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: inherit;
+        color: #111;
+        border: 1px solid #ddd;
+        border-radius: .25rem;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+        background-color: #fff;
+        height: 2.25rem;
+        vertical-align: middle;
+        display: block;
+        padding-left: .5rem;
+        padding-right: .5rem;
+        margin: 0;
+        -webkit-transition: border-color .1s,background-color .1s,color .1s;
+        transition: border-color .1s,background-color .1s,color .1s;
+        white-space: nowrap;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+    }
 
-#transcript{
-    margin: 30px 0;
-    white-space: pre-wrap;
-    background-color: #f2f2f2;
-    height: auto;
-    resize: vertical;
-    line-height: 1.5;
-    width: 100%;
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: inherit;
-    color: #111;
-    border: 1px solid #ddd;
-    border-radius: .25rem;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-    vertical-align: middle;
-    display: block;
-    padding-left: .5rem;
-    padding-right: .5rem;
-    -webkit-transition: border-color .1s,background-color .1s,color .1s;
-    transition: border-color .1s,background-color .1s,color .1s;
-    white-space: nowrap;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-}
+    #transcript {
+        white-space: pre-wrap;
+        background-color: #f2f2f2;
+        height: auto;
+        resize: vertical;
+        line-height: 1.5;
+        width: 100%;
+        height: 150px;
+        overflow-y: auto;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: inherit;
+        color: #111;
+        border: 1px solid #ddd;
+        border-radius: .25rem;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+        vertical-align: middle;
+        display: block;
+        padding-left: .5rem;
+        padding-right: .5rem;
+        -webkit-transition: border-color .1s,background-color .1s,color .1s;
+        transition: border-color .1s,background-color .1s,color .1s;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+    }
 
-#real-time-audio-transcription-for-zoom button {
-    font-family: inherit;
-    font-size: 1.5rem;
-    height: 3.25rem;
-    line-height: calc(3.25rem - 2px);
-    font-weight: inherit;
-    text-align: center;
-    text-decoration: none;
-    color: #fff;
-    background-color: #0074d9;
-    border-radius: .25rem;
-    border: 1px solid #0074d9;
-    border-top-color: #1982dd;
-    border-bottom-color: #0068c3;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    vertical-align: middle;
-    white-space: nowrap;
-    padding: 0 .75em;
-    cursor: pointer;
-    display: inline-block;
-    -webkit-transition: all .1s;
-    transition: all .1s;
-}
+    #real-time-audio-transcription-for-zoom button {
+        font-family: inherit;
+        font-size: 1.5rem;
+        height: 3.25rem;
+        line-height: calc(3.25rem - 2px);
+        font-weight: inherit;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        background-color: #0074d9;
+        border-radius: .25rem;
+        border: 1px solid #0074d9;
+        border-top-color: #1982dd;
+        border-bottom-color: #0068c3;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        vertical-align: middle;
+        white-space: nowrap;
+        padding: 0 .75em;
+        cursor: pointer;
+        display: inline-block;
+        -webkit-transition: all .1s;
+        transition: all .1s;
+    }
 
-#real-time-audio-transcription-for-zoom button:disabled {
-    background-color: #0068c3;
-    border-top-color: #1982dd;
-    border-bottom-color: #0068c3;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    text-decoration: none;
-    opacity: .5;
-    cursor: not-allowed;
-}
+    #real-time-audio-transcription-for-zoom button:disabled {
+        background-color: #0068c3;
+        border-top-color: #1982dd;
+        border-bottom-color: #0068c3;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        text-decoration: none;
+        opacity: .5;
+        cursor: not-allowed;
+    }
 
-#real-time-audio-transcription-for-zoom button.button-secondary {
-    color: #fff;
-    background-color: #aaa;
-    border-color: #aaa;
-    border-top-color: #b3b3b3;
-    border-bottom-color: #999;
-}
+    #real-time-audio-transcription-for-zoom button.button-secondary {
+        color: #fff;
+        background-color: #aaa;
+        border-color: #aaa;
+        border-top-color: #b3b3b3;
+        border-bottom-color: #999;
+    }
 
-#start-button{
-    margin: 5px 0;
-}
+    #start-button{
+        margin: 5px 0;
+    }
 
-#stop-button{
-    margin: 5px 0;
-}
+    #stop-button{
+        margin: 5px 0;
+    }
 
-#reset-button{
+    #reset-button{
 
-}
+    }
 
+    .isa_error {
+        padding: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1.4rem;
+        border-radius: 5px 5px 5px 5px;
+        color: #D8000C;
+        background-color: #FFD2D2;
+        display: none;
+        font-size: 0.7em;
+    }
 
+    .isa_success {
+        padding: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1.4rem;
+        border-radius: 5px 5px 5px 5px;
+        color: #155724;
+        background-color: #d4edda;
+        display: none;
+        font-size: 0.7em;
+    }
 </style>
 
 <link href="https://cdn.ubc.ca/clf/7.0.4/css/ubc-clf-full-bw.min.css" rel="stylesheet">
@@ -431,10 +449,7 @@ var js_errors = {"wpajaxurl":"https:\/\/lthub.ubc.ca\/wp-admin\/admin-ajax.php",
 				    <h1 class="page-title entry-title">Closed Captioning for Zoom</h1>
 
                     <div class="entry-content">
-
-
                         <div class="guide">
-
                             <div class="intro">
                                 This page enables closed captioning for live Zoom sessions. For help with using Zoom generally, check out UBC’s <a href="https://elearning5.sites.olt.ubc.ca/guides/zoom-instructor-guide/" rel="noopener noreferrer" target="_blank">Zoom instructor guide</a>.
                             </div>
@@ -476,17 +491,16 @@ var js_errors = {"wpajaxurl":"https:\/\/lthub.ubc.ca\/wp-admin\/admin-ajax.php",
                                 </div>
                             </div>
 
-                            <div id="real-time-audio-transcription-for-zoom">
-                                <h3>Zoom closed captioning tool</h3>
+                            <h3>Zoom closed captioning tool</h3>
 
-                                <div id="error" class="isa_error"></div>
+                            <div id="real-time-audio-transcription-for-zoom">
                                 <div class="row">
                                     <div class="col">
-                                        <label>ZOOM CC API Token:</label>
+                                        <label for="zoom_api_token">ZOOM API Token</label>
                                         <input type="password" id="zoom_api_token" placeholder="ZOOM API Token" value="" />
                                     </div>
                                     <div class="col">
-                                        <label>Language: </label>
+                                        <label for="language">Language</label>
                                         <select id="language">
                                             <optgroup label="English">
                                                 <option value="en-US">US English (en-US)</option>
@@ -503,19 +517,31 @@ var js_errors = {"wpajaxurl":"https:\/\/lthub.ubc.ca\/wp-admin\/admin-ajax.php",
                                         </select>
                                     </div>
                                 </div>
-                                <textarea id="transcript" placeholder="Press Start and speak into your mic" rows="5" readonly="readonly"></textarea>
                                 <div class="row">
                                     <div class="col">
                                         <button id="start-button" class="button-xl" title="Start Transcription">
-                                            <i class="fa fa-microphone"></i> Start
+                                            <i class="fa fa-play-circle"></i> Start
                                         </button>
                                         <button id="stop-button" class="button-xl" title="Stop Transcription" disabled="true">
                                             <i class="fa fa-stop-circle"></i> Stop
                                         </button>
-                                        <button id="reset-button" class="button-xl button-secondary" title="Clear Transcript">Clear Transcript</button>
                                     </div>
-                                    <div class="col"></div>
+                                    <div class="col">
+                                        <div id="error" class="isa_error"></div>
+                                        <div id="success" class="isa_success"></div>
+                                    </div>
                                 </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col">
+                                        Captioning Being Sent to Zoom
+                                        <div id="transcript"></div>
+                                    </div>
+                                </div>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                                <script src="dist/main.js"></script>
+                                <hr />
+                                <a class="yellow btn" href="https://lthub.ubc.ca/guides/zoom-instructor-guide/">« See the Zoom instructor guide</a>
                             </div>
                         </div>
 					</div><!-- .entry-content -->

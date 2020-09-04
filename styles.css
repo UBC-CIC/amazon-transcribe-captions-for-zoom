@@ -12,7 +12,7 @@ body {
     margin: 5px 0;
 }
 
-#error {
+.isa_error {
     padding: 10px;
     margin-left: auto;
     margin-right: auto;
@@ -23,7 +23,18 @@ body {
     display: none;
 }
 
-.isa_error i {
+.isa_success {
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.4rem;
+    border-radius: 5px 5px 5px 5px;
+    color: #155724;
+    background-color: #d4edda;
+    display: none;
+}
+
+.isa_error i, .isa_success i {
     margin: 2px 12px;
     font-size: 1.5em;
     vertical-align: middle;
